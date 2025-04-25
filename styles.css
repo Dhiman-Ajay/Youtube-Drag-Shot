@@ -1,0 +1,273 @@
+/* styles.css */
+.screenshot-btn {
+  cursor: pointer;
+  position: relative;
+  z-index: 5;
+}
+
+.screenshot-gallery {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark Mode Styles */
+.screenshot-gallery.dark-mode {
+  background-color: #212121;
+  color: #f5f5f5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.screenshot-gallery.dark-mode .gallery-header h3 {
+  color: #f5f5f5;
+}
+
+.screenshot-gallery.dark-mode .screenshot-items:empty::after {
+  color: #aaa;
+}
+
+.gallery-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.gallery-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gallery-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.gallery-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dark-mode-toggle, .view-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 50%;
+  color: #555;
+  transition: background-color 0.2s;
+}
+
+.dark-mode-toggle:hover, .view-toggle-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.screenshot-gallery.dark-mode .dark-mode-toggle,
+.screenshot-gallery.dark-mode .view-toggle-btn {
+  color: #f0f0f0;
+}
+
+.screenshot-gallery.dark-mode .dark-mode-toggle:hover,
+.screenshot-gallery.dark-mode .view-toggle-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.clear-gallery-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.clear-gallery-btn:hover {
+  background-color: #d32f2f;
+}
+
+/* Grid Container Styles */
+.screenshot-grid-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Grid View (default) */
+.screenshot-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 5px;
+  padding: 5px 0;
+  min-height: 130px;
+}
+
+/* Row View */
+.screenshot-grid-container.row-view .screenshot-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+/* Smaller box size for screenshots */
+.screenshot-item {
+  width: 80px; /* Set a smaller width for the box */
+  height: 45px; /* Maintain a 16:9 aspect ratio */
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease;
+}
+
+/* Adjust box size in row view */
+.screenshot-grid-container.row-view .screenshot-item {
+  width: 100px; /* Slightly larger for row view */
+  height: 56px; /* Maintain 16:9 aspect ratio */
+}
+
+/* Highlight effect for new screenshots */
+@keyframes highlightPulse {
+  0% { box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(33, 150, 243, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(33, 150, 243, 0); }
+}
+
+/* Highlight effect for new screenshots */
+.screenshot-item.new-screenshot {
+  animation: highlightPulse 1.5s ease-out;
+  box-shadow: 0 0 0 2px #2196F3;
+}
+
+.screenshot-gallery.dark-mode .screenshot-item {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.screenshot-gallery.dark-mode .screenshot-item.new-screenshot {
+  box-shadow: 0 0 0 2px #2196F3;
+}
+
+/* Adjust hover effect for smaller boxes */
+.screenshot-item:hover {
+  transform: scale(1.1); /* Slightly enlarge on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
+
+.screenshot-item.being-dragged {
+  opacity: 0.6;
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+.screenshot-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: grab;
+  -webkit-user-drag: element;
+}
+
+.screenshot-item img:active {
+  cursor: grabbing;
+}
+
+/* Download button */
+.download-screenshot {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.screenshot-item:hover .download-screenshot {
+  opacity: 1;
+}
+
+.download-screenshot:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Empty state */
+.screenshot-items:empty::after {
+  content: "No screenshots yet. Click the screenshot button while watching a video.";
+  display: block;
+  color: #666;
+  font-style: italic;
+  padding: 20px 0;
+  width: 100%;
+  text-align: center;
+  grid-column: 1 / -1;
+}
+
+/* Ensure we indicate draggability */
+.screenshot-item::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 16px;
+  height: 16px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M18 11V8l-4 4 4 4v-3h2v7h-6v-2h4v-3h-2v-4H8v3H6V9h6v2H8v3h8zM2 12l4-4v3h2V4h6v2H10v3h2v4h8v-3h2v7h-6v-2h4v-3h-2V9H8v3H6z"/></svg>');
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.7;
+}
+
+.screenshot-item:hover::after {
+  opacity: 0.9;
+}
+
+/* Smaller image size inside the container */
+.screenshot-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: grab;
+  -webkit-user-drag: element;
+  transform: scale(1); /* Make images smaller */
+  transition: transform 0.2s ease;
+}
+
+.screenshot-item img:active {
+  cursor: grabbing;
+}
+
+/* On drag, return to original size */
+.screenshot-item.being-dragged img {
+  transform: scale(1); /* Original size */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .screenshot-items {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); /* Adjust grid for smaller boxes */
+  }
+  
+  .screenshot-grid-container.row-view .screenshot-item {
+    width: 90px; /* Adjust for smaller screens */
+    height: 50px;
+  }
+}
